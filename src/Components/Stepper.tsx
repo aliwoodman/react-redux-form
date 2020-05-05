@@ -8,7 +8,7 @@ import { StepLabel } from '@material-ui/core'
 type Props = {
   steps: {
     title: string
-    content: string
+    content: JSX.Element
   }[]
 }
 
