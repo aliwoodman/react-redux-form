@@ -1,5 +1,6 @@
 import { createStore } from 'redux'
 import { PrivacyState, UserState } from './types'
+import { validate } from './validate'
 
 export type IState = {
   user: UserState
@@ -24,20 +25,6 @@ const initialState: IState = {
   },
 }
 
-const checkValidity = (name: string, value: string) => {
-  switch (name) {
-    case 'name': {
-      return !!value.length
-    }
-    case 'email': {
-      return !!value.length
-    }
-    case 'password': {
-      return !!value.length
-    }
-  }
-}
-
 export const reducer = function (state = initialState, action: any) {
   switch (action.type) {
     case 'UPDATE_REQUIRED_USER_FIELD': {
@@ -49,7 +36,7 @@ export const reducer = function (state = initialState, action: any) {
             ...state.user.requiredFields,
             [action.payload.name]: {
               value: action.payload.value,
-              isValid: checkValidity(action.payload.name, action.payload.value),
+              isValid: validate(action.payload.name, action.payload.value),
             },
           },
         },
@@ -59,7 +46,7 @@ export const reducer = function (state = initialState, action: any) {
       return {
         ...state,
         user: {
-         ...state.user,
+          ...state.user,
           optionalFields: {
             ...state.user.optionalFields,
             [action.payload.name]: {
