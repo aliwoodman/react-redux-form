@@ -1,16 +1,33 @@
-import { createStore } from 'redux';
+import { createStore } from 'redux'
+import { UserState } from './types'
 
-const reducer = function (state = 0, action: any) {
+type IState = {
+  user: UserState
+}
+
+const initialState: IState = {
+  user: {
+    password: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+  },
+}
+
+export const reducer = function (state = initialState, action: any) {
   switch (action.type) {
-    case "INCREMENT":
-      return state + 1;
-    case "DECREMENT":
-      return state - 1;
+    case 'UPDATE_USER': {
+      console.log(action.payload)
+      return {
+        ...state,
+        user: { ...state.user, [action.payload.name]: action.payload.value },
+      }
+    }
     default:
-      return state;
+      return state
   }
-};
+}
 
 const store = createStore(reducer)
 
-export default  store
+export default store

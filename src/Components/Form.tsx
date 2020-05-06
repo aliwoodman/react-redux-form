@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import HorizontalLinearStepper from './Stepper'
 import User from './User'
 import Privacy from './Privacy'
@@ -15,7 +14,7 @@ const Container = styled.div`
   width: 100%;
 `
 
-const Form = ({ state, handleDecrementClick, handleIncrementClick }: any) => {
+const Form = () => {
   const steps = [
     { title: 'User', content: <User /> },
     { title: 'Privacy', content: <Privacy /> },
@@ -24,20 +23,9 @@ const Form = ({ state, handleDecrementClick, handleIncrementClick }: any) => {
 
   return (
     <Container>
-      <div>Hello world {state}</div>
-      <button onClick={handleDecrementClick}>Decrement</button>
-      <button onClick={handleIncrementClick}>Increment</button>
       <HorizontalLinearStepper steps={steps} />
     </Container>
   )
 }
 
-export default connect(
-  (state: any) => ({
-    state: state,
-  }),
-  (dispatch: any) => ({
-    handleIncrementClick: () => dispatch({ type: 'INCREMENT' }),
-    handleDecrementClick: () => dispatch({ type: 'DECREMENT' }),
-  })
-)(Form)
+export default Form

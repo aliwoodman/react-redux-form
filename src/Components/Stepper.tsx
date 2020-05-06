@@ -36,9 +36,7 @@ const HorizontalLinearStepper = ({ steps }: Props) => {
       </Stepper>
       <div>
         <div>
-          <Typography className={'instructions'}>
             {steps[activeStep].content}
-          </Typography>
           <div>
             {activeStep > 0 && activeStep < steps.length - 1 ? (
               <Button onClick={handleBack} id={'back-button'}>
