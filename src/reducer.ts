@@ -2,12 +2,12 @@ import { createStore } from 'redux'
 import { PrivacyState, UserState } from './types'
 import { validate } from './validate'
 
-export type IState = {
+export type State = {
   user: UserState
   privacy: PrivacyState
 }
 
-const initialState: IState = {
+const initialState: State = {
   user: {
     requiredFields: {
       name: { value: '', isValid: false },

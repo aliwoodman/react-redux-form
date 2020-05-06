@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { IState } from '../reducer'
-import {PrivacyState, UserState} from "../types";
+import { State } from '../reducer'
+import { PrivacyState, UserState } from '../types'
 
 const Container = styled.div`
   display: flex;
@@ -17,12 +17,12 @@ const Tick = styled.img`
 `
 
 type StateProps = {
-  user: UserState,
+  user: UserState
   privacy: PrivacyState
 }
 
-const Done = ({user, privacy}: StateProps) => {
-  console.log({...user.requiredFields, ...user.optionalFields, privacy})
+const Done = ({ user, privacy }: StateProps) => {
+  console.log({ ...user.requiredFields, ...user.optionalFields, privacy })
   return (
     <Container>
       <Tick src={'/done.svg'} />
@@ -34,9 +34,7 @@ const Done = ({user, privacy}: StateProps) => {
   )
 }
 
-export default connect(
-  (state: IState) => ({
-    user: state.user,
-    privacy: state.privacy,
-  })
-)(Done)
+export default connect((state: State) => ({
+  user: state.user,
+  privacy: state.privacy,
+}))(Done)

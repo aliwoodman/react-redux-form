@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button'
 import { StepLabel } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { UserState } from '../types'
-import { IState } from '../reducer'
+import { State } from '../reducer'
 
 type DispatchProps = {
   requestNextStep: (value: boolean) => void
@@ -85,7 +85,7 @@ const HorizontalLinearStepper = ({ steps, requestNextStep, user }: Props) => {
 }
 
 export default connect(
-  (state: IState) => ({
+  (state: State) => ({
     user: state.user,
   }),
   (dispatch: any) => ({

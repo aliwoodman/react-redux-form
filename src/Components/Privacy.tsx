@@ -3,7 +3,7 @@ import { Container } from './Container.styles'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { PrivacyState } from '../types'
-import { IState } from '../reducer'
+import { State } from '../reducer'
 
 const Checkbox = styled.div`
   margin-bottom: 10px;
@@ -32,9 +32,8 @@ const Privacy = ({ privacy, updatePrivacy }: Props) => {
           type="checkbox"
           id="privacyA"
           name="privacyA"
-          value="currentProductEmailConsent"
           checked={privacy.currentProductEmailConsent}
-          onClick={() =>
+          onChange={() =>
             updatePrivacy(
               'currentProductEmailConsent',
               !privacy.currentProductEmailConsent
@@ -50,9 +49,8 @@ const Privacy = ({ privacy, updatePrivacy }: Props) => {
           type="checkbox"
           id="privacyB"
           name="privacyB"
-          value="relatedProductEmailConsent"
           checked={privacy.relatedProductEmailConsent}
-          onClick={() =>
+          onChange={() =>
             updatePrivacy(
               'relatedProductEmailConsent',
               !privacy.relatedProductEmailConsent
@@ -69,7 +67,7 @@ const Privacy = ({ privacy, updatePrivacy }: Props) => {
 }
 
 export default connect(
-  (state: IState) => ({
+  (state: State) => ({
     privacy: state.privacy,
   }),
   (dispatch: any) => ({

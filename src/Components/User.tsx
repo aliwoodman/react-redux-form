@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { UserState } from '../types'
 import { Container } from './Container.styles'
-import { IState } from '../reducer'
+import { State } from '../reducer'
 
 const Input = styled.input`
   margin-bottom: 2px;
@@ -42,6 +42,7 @@ const User = ({
   updateRequiredUserField,
   user,
 }: Props) => {
+
   const onChange = (name: string) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -51,6 +52,7 @@ const User = ({
       updateRequiredUserField(name, event.target.value)
     }
   }
+
   return (
     <Container>
       <Label htmlFor="name">Name:</Label>
@@ -109,10 +111,10 @@ const User = ({
 }
 
 export default connect(
-  (state: IState) => ({
+  (state: State) => ({
     user: state.user,
   }),
-  (dispatch: any) => ({
+  (dispatch) => ({
     updateRequiredUserField: (name: string, value: string) =>
       dispatch({
         type: 'UPDATE_REQUIRED_USER_FIELD',
