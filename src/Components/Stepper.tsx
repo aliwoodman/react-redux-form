@@ -48,7 +48,7 @@ const HorizontalLinearStepper = ({ steps, requestNextStep, user }: Props) => {
   }
 
   return (
-    <div className={'root'}>
+    <div>
       <Stepper activeStep={activeStep}>
         {steps.map((step) => {
           return (

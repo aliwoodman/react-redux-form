@@ -5,4 +5,5 @@ export const Container = styled.form`
   flex-direction: column;
   text-align: left;
   margin: 20px;
+  width: 400px;
 `

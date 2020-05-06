@@ -23,6 +23,7 @@ type StateProps = {
 }
 
 type Props = DispatchProps & StateProps
+
 const Privacy = ({ privacy, updatePrivacy }: Props) => {
   return (
     <Container>

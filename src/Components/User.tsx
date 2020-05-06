@@ -84,7 +84,7 @@ const User = ({
         value={user.requiredFields.email.value}
       />
       {!user.requiredFields.email.isValid && user.requestNextStep ? (
-        <Warning>Email is required</Warning>
+        <Warning>A valid email is required</Warning>
       ) : (
         <Spacer />
       )}
@@ -97,7 +97,10 @@ const User = ({
         value={user.requiredFields.password.value}
       />
       {!user.requiredFields.password.isValid && user.requestNextStep ? (
-        <Warning>Password is required</Warning>
+        <Warning>
+          Password is required (at least 10 characters including at least one uppercase
+          letter, one lowercase letter and one number)
+        </Warning>
       ) : (
         <Spacer />
       )}
