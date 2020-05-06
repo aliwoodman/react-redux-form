@@ -1,8 +1,9 @@
 import { createStore } from 'redux'
-import { UserState } from './types'
+import {PrivacyState, UserState} from './types'
 
 type IState = {
   user: UserState
+  privacy: PrivacyState
 }
 
 const initialState: IState = {
@@ -12,15 +13,25 @@ const initialState: IState = {
     lastName: '',
     email: '',
   },
+  privacy: {
+    currentProductEmailConsent: false,
+    relatedProductEmailConsent: false,
+  }
 }
 
 export const reducer = function (state = initialState, action: any) {
   switch (action.type) {
     case 'UPDATE_USER': {
-      console.log(action.payload)
       return {
         ...state,
         user: { ...state.user, [action.payload.name]: action.payload.value },
+      }
+    }
+    case 'UPDATE_PRIVACY': {
+      console.log(action.payload)
+      return {
+        ...state,
+        privacy: { ...state.privacy, [action.payload.name]: action.payload.value },
       }
     }
     default:

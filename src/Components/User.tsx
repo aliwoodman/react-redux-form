@@ -2,12 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { UserState } from '../types'
+import {Container} from "./Container.styles";
 
-const Container = styled.form`
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-`
 const Input = styled.input`
   margin-bottom: 10px;
 `
