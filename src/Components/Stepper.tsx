@@ -2,21 +2,45 @@ import React from 'react'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
 import { StepLabel } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { UserState } from '../types'
+import { IState } from '../reducer'
 
-type Props = {
+type DispatchProps = {
+  requestNextStep: (value: boolean) => void
+}
+
+type StateProps = {
+  user: UserState
+}
+type ComponentProps = {
   steps: {
     title: string
     content: JSX.Element
   }[]
 }
 
-const HorizontalLinearStepper = ({ steps }: Props) => {
+type Props = DispatchProps & StateProps & ComponentProps
+
+const areInputsValid = (user: UserState) => {
+  return Object.values(user).every((value) => {
+    return typeof value === 'boolean' || value.isValid
+  })
+}
+
+const HorizontalLinearStepper = ({ steps, requestNextStep, user }: Props) => {
   const [activeStep, setActiveStep] = React.useState(0)
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    if (activeStep === 0) {
+      requestNextStep(true)
+      if (areInputsValid(user)) {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1)
+      }
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    }
   }
 
   const handleBack = () => {
@@ -36,7 +60,7 @@ const HorizontalLinearStepper = ({ steps }: Props) => {
       </Stepper>
       <div>
         <div>
-            {steps[activeStep].content}
+          {steps[activeStep].content}
           <div>
             {activeStep > 0 && activeStep < steps.length - 1 ? (
               <Button onClick={handleBack} id={'back-button'}>
@@ -60,4 +84,12 @@ const HorizontalLinearStepper = ({ steps }: Props) => {
   )
 }
 
-export default HorizontalLinearStepper
+export default connect(
+  (state: IState) => ({
+    user: state.user,
+  }),
+  (dispatch: any) => ({
+    requestNextStep: (value: boolean) =>
+      dispatch({ type: 'UPDATE_REQUEST_NEXT_STEP', payload: value }),
+  })
+)(HorizontalLinearStepper)

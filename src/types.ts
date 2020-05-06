@@ -1,11 +1,12 @@
 export type UserState = {
-  password: string
-  firstName: string
-  lastName: string
-  email: string
+  password: { value: string; isValid: boolean }
+  firstName: { value: string; isValid: boolean }
+  lastName: { value: string; isValid: boolean }
+  email: { value: string; isValid: boolean }
+  requestNextStep: boolean
 }
 
 export type PrivacyState = {
-  currentProductEmailConsent: boolean,
-  relatedProductEmailConsent: boolean,
+  currentProductEmailConsent: boolean
+  relatedProductEmailConsent: boolean
 }

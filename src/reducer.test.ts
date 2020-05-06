@@ -8,10 +8,23 @@ describe('reducer', () => {
     const reducedState = reducer(state, action as any)
     expect(reducedState).toEqual({
       user: {
-        email: '',
-        firstName: '',
-        lastName: '',
-        password: '',
+        email: {
+          isValid: false,
+          value: '',
+        },
+        firstName: {
+          isValid: false,
+          value: '',
+        },
+        lastName: {
+          isValid: false,
+          value: '',
+        },
+        password: {
+          isValid: false,
+          value: '',
+        },
+        requestNextStep: false,
       },
       privacy: {
         currentProductEmailConsent: false,
@@ -25,16 +38,42 @@ describe('reducer', () => {
       const state = undefined
       const action = {
         type: 'UPDATE_USER',
-        payload: { name: 'password', value: 'pw' },
+        payload: { name: 'firstName', value: 'Bob' },
       }
 
       const reducedState = reducer(state, action as any)
       expect(reducedState.user).toEqual({
-        email: '',
-        firstName: '',
-        lastName: '',
-        password: 'pw',
+        email: {
+          isValid: false,
+          value: '',
+        },
+        firstName: {
+          isValid: true,
+          value: 'Bob',
+        },
+        lastName: {
+          isValid: false,
+          value: '',
+        },
+        password: {
+          isValid: false,
+          value: '',
+        },
+        requestNextStep: false,
       })
+    })
+  })
+
+  describe('UPDATE_REQUEST_NEXT_STEP', () => {
+    it('sets requestNextStep to the given payload', () => {
+      const state = undefined
+      const action = {
+        type: 'UPDATE_REQUEST_NEXT_STEP',
+        payload: true,
+      }
+
+      const reducedState = reducer(state, action as any)
+      expect(reducedState.user.requestNextStep).toEqual(true)
     })
   })
 

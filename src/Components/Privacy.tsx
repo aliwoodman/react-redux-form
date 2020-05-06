@@ -3,6 +3,7 @@ import { Container } from './Container.styles'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { PrivacyState } from '../types'
+import { IState } from '../reducer'
 
 const Checkbox = styled.div`
   margin-bottom: 10px;
@@ -32,7 +33,12 @@ const Privacy = ({ privacy, updatePrivacy }: Props) => {
           name="privacyA"
           value="currentProductEmailConsent"
           checked={privacy.currentProductEmailConsent}
-          onClick={() => updatePrivacy('currentProductEmailConsent', !privacy.currentProductEmailConsent)}
+          onClick={() =>
+            updatePrivacy(
+              'currentProductEmailConsent',
+              !privacy.currentProductEmailConsent
+            )
+          }
         />
         <Label htmlFor="privacyA">
           Receive updates about Tray.io product by email
@@ -45,7 +51,12 @@ const Privacy = ({ privacy, updatePrivacy }: Props) => {
           name="privacyB"
           value="relatedProductEmailConsent"
           checked={privacy.relatedProductEmailConsent}
-          onClick={() => updatePrivacy('relatedProductEmailConsent', !privacy.relatedProductEmailConsent)}
+          onClick={() =>
+            updatePrivacy(
+              'relatedProductEmailConsent',
+              !privacy.relatedProductEmailConsent
+            )
+          }
         />
         <Label htmlFor="privacyB">
           Receive communication by email for other products created by the
@@ -57,7 +68,7 @@ const Privacy = ({ privacy, updatePrivacy }: Props) => {
 }
 
 export default connect(
-  (state: any) => ({
+  (state: IState) => ({
     privacy: state.privacy,
   }),
   (dispatch: any) => ({
