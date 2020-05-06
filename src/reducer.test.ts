@@ -7,59 +7,99 @@ describe('reducer', () => {
 
     const reducedState = reducer(state, action as any)
     expect(reducedState).toEqual({
-      user: {
-        email: {
-          isValid: false,
-          value: '',
-        },
-        firstName: {
-          isValid: false,
-          value: '',
-        },
-        lastName: {
-          isValid: false,
-          value: '',
-        },
-        password: {
-          isValid: false,
-          value: '',
-        },
-        requestNextStep: false,
-      },
       privacy: {
         currentProductEmailConsent: false,
         relatedProductEmailConsent: false,
       },
+      user: {
+        optionalFields: {
+          role: {
+            value: '',
+          },
+        },
+        requestNextStep: false,
+        requiredFields: {
+          email: {
+            isValid: false,
+            value: '',
+          },
+          name: {
+            isValid: false,
+            value: '',
+          },
+          password: {
+            isValid: false,
+            value: '',
+          },
+        },
+      },
     })
   })
 
-  describe('UPDATE_USER', () => {
+  describe('UPDATE_REQUIRED_USER_FIELD', () => {
     it('updates the key that matches the name, with the given value', () => {
       const state = undefined
       const action = {
-        type: 'UPDATE_USER',
-        payload: { name: 'firstName', value: 'Bob' },
+        type: 'UPDATE_REQUIRED_USER_FIELD',
+        payload: { name: 'name', value: 'Bob' },
       }
 
       const reducedState = reducer(state, action as any)
       expect(reducedState.user).toEqual({
-        email: {
-          isValid: false,
-          value: '',
-        },
-        firstName: {
-          isValid: true,
-          value: 'Bob',
-        },
-        lastName: {
-          isValid: false,
-          value: '',
-        },
-        password: {
-          isValid: false,
-          value: '',
+        optionalFields: {
+          role: {
+            value: '',
+          },
         },
         requestNextStep: false,
+        requiredFields: {
+          email: {
+            isValid: false,
+            value: '',
+          },
+          name: {
+            isValid: true,
+            value: 'Bob',
+          },
+          password: {
+            isValid: false,
+            value: '',
+          },
+        },
+      })
+    })
+  })
+
+  describe('UPDATE_OPTIONAL_USER_FIELD', () => {
+    it('updates the key that matches the name, with the given value', () => {
+      const state = undefined
+      const action = {
+        type: 'UPDATE_OPTIONAL_USER_FIELD',
+        payload: { name: 'role', value: 'chief cheese' },
+      }
+
+      const reducedState = reducer(state, action as any)
+      expect(reducedState.user).toEqual({
+        optionalFields: {
+          role: {
+            value: 'chief cheese',
+          },
+        },
+        requestNextStep: false,
+        requiredFields: {
+          email: {
+            isValid: false,
+            value: '',
+          },
+          name: {
+            isValid: false,
+            value: '',
+          },
+          password: {
+            isValid: false,
+            value: '',
+          },
+        },
       })
     })
   })

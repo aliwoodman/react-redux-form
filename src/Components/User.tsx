@@ -27,7 +27,8 @@ const Spacer = styled.div`
 `
 
 type DispatchProps = {
-  updateUser: (name: string, value: string) => void
+  updateOptionalUserField: (name: string, value: string) => void
+  updateRequiredUserField: (name: string, value: string) => void
 }
 
 type StateProps = {
@@ -36,49 +37,53 @@ type StateProps = {
 
 type Props = DispatchProps & StateProps
 
-const User = ({ updateUser, user }: Props) => {
+const User = ({
+  updateOptionalUserField,
+  updateRequiredUserField,
+  user,
+}: Props) => {
   const onChange = (name: string) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    updateUser(name, event.target.value)
+    if (Object.keys(user.optionalFields).includes(name)) {
+      updateOptionalUserField(name, event.target.value)
+    } else {
+      updateRequiredUserField(name, event.target.value)
+    }
   }
   return (
     <Container>
-      <Label htmlFor="fname">First name:</Label>
+      <Label htmlFor="name">Name:</Label>
       <Input
         type="text"
-        id="fname"
-        name="fname"
-        onChange={onChange('firstName')}
-        value={user.firstName.value}
+        id="name"
+        name="name"
+        onChange={onChange('name')}
+        value={user.requiredFields.name.value}
       />
-      {!user.firstName.isValid && user.requestNextStep ? (
-        <Warning>First name is required</Warning>
+      {!user.requiredFields.name.isValid && user.requestNextStep ? (
+        <Warning>Name is required</Warning>
       ) : (
         <Spacer />
       )}
-      <Label htmlFor="lname">Last name:</Label>
+      <label htmlFor="role">Role:</label>
       <Input
         type="text"
-        id="lname"
-        name="lname"
-        onChange={onChange('lastName')}
-        value={user.lastName.value}
+        id="role"
+        name="role"
+        onChange={onChange('role')}
+        value={user.optionalFields.role.value}
       />
-      {!user.lastName.isValid && user.requestNextStep ? (
-        <Warning>Last name is required</Warning>
-      ) : (
-        <Spacer />
-      )}
+      <Spacer />
       <Label htmlFor="email">Email:</Label>
       <Input
         type="text"
         id="email"
         name="email"
         onChange={onChange('email')}
-        value={user.email.value}
+        value={user.requiredFields.email.value}
       />
-      {!user.email.isValid && user.requestNextStep ? (
+      {!user.requiredFields.email.isValid && user.requestNextStep ? (
         <Warning>Email is required</Warning>
       ) : (
         <Spacer />
@@ -89,9 +94,9 @@ const User = ({ updateUser, user }: Props) => {
         id="password"
         name="password"
         onChange={onChange('password')}
-        value={user.password.value}
+        value={user.requiredFields.password.value}
       />
-      {!user.password.isValid && user.requestNextStep ? (
+      {!user.requiredFields.password.isValid && user.requestNextStep ? (
         <Warning>Password is required</Warning>
       ) : (
         <Spacer />
@@ -105,7 +110,15 @@ export default connect(
     user: state.user,
   }),
   (dispatch: any) => ({
-    updateUser: (name: string, value: string) =>
-      dispatch({ type: 'UPDATE_USER', payload: { name, value } }),
+    updateRequiredUserField: (name: string, value: string) =>
+      dispatch({
+        type: 'UPDATE_REQUIRED_USER_FIELD',
+        payload: { name, value },
+      }),
+    updateOptionalUserField: (name: string, value: string) =>
+      dispatch({
+        type: 'UPDATE_OPTIONAL_USER_FIELD',
+        payload: { name, value },
+      }),
   })
 )(User)

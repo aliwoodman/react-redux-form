@@ -8,10 +8,14 @@ export type IState = {
 
 const initialState: IState = {
   user: {
-    password: { value: '', isValid: false },
-    firstName: { value: '', isValid: false },
-    lastName: { value: '', isValid: false },
-    email: { value: '', isValid: false },
+    requiredFields: {
+      name: { value: '', isValid: false },
+      password: { value: '', isValid: false },
+      email: { value: '', isValid: false },
+    },
+    optionalFields: {
+      role: { value: '' },
+    },
     requestNextStep: false,
   },
   privacy: {
@@ -22,31 +26,45 @@ const initialState: IState = {
 
 const checkValidity = (name: string, value: string) => {
   switch (name) {
-    case 'firstName': {
-      return value.length ? true : false
-    }
-    case 'lastName': {
-      return value.length ? true : false
+    case 'name': {
+      return !!value.length
     }
     case 'email': {
-      return value.length ? true : false
+      return !!value.length
     }
     case 'password': {
-      return value.length ? true : false
+      return !!value.length
     }
   }
 }
 
 export const reducer = function (state = initialState, action: any) {
   switch (action.type) {
-    case 'UPDATE_USER': {
+    case 'UPDATE_REQUIRED_USER_FIELD': {
       return {
         ...state,
         user: {
           ...state.user,
-          [action.payload.name]: {
-            value: action.payload.value,
-            isValid: checkValidity(action.payload.name, action.payload.value),
+          requiredFields: {
+            ...state.user.requiredFields,
+            [action.payload.name]: {
+              value: action.payload.value,
+              isValid: checkValidity(action.payload.name, action.payload.value),
+            },
+          },
+        },
+      }
+    }
+    case 'UPDATE_OPTIONAL_USER_FIELD': {
+      return {
+        ...state,
+        user: {
+         ...state.user,
+          optionalFields: {
+            ...state.user.optionalFields,
+            [action.payload.name]: {
+              value: action.payload.value,
+            },
           },
         },
       }

@@ -1,8 +1,12 @@
 export type UserState = {
-  password: { value: string; isValid: boolean }
-  firstName: { value: string; isValid: boolean }
-  lastName: { value: string; isValid: boolean }
-  email: { value: string; isValid: boolean }
+  requiredFields: {
+    name: { value: string; isValid: boolean }
+    password: { value: string; isValid: boolean }
+    email: { value: string; isValid: boolean }
+  }
+  optionalFields: {
+    role: { value: string }
+  }
   requestNextStep: boolean
 }
 

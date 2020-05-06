@@ -24,8 +24,8 @@ type ComponentProps = {
 type Props = DispatchProps & StateProps & ComponentProps
 
 const areInputsValid = (user: UserState) => {
-  return Object.values(user).every((value) => {
-    return typeof value === 'boolean' || value.isValid
+  return Object.values(user.requiredFields).every((value) => {
+    return value.isValid
   })
 }
 
